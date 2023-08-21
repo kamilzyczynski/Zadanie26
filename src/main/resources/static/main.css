@@ -1,0 +1,16 @@
+/*.list-group-item {*/
+/*    flex: 1;*/
+/*    !*min-width: 100px;*!*/
+/*    max-width: 200px;*/
+/*    padding: 10px;*/
+/*    box-sizing: border-box;*/
+/*}*/
+.custom-form-control {
+    display: inline-block;
+    width: 200px;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.custom-select-width {
+    width: 150px; /* Adjust the width as needed */
+}
