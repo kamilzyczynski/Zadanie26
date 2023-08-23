@@ -20,6 +20,9 @@ public class Match {
     @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private MatchResult result;
+    private Integer scoreTeamA;
+    private Integer scoreTeamB;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private boolean bettingClosed;
@@ -30,6 +33,28 @@ public class Match {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getScoreTeamA() {
+        return scoreTeamA;
+    }
+
+    public void setScoreTeamA(Integer scoreTeamA) {
+        if (scoreTeamA < 0) {
+            throw new IllegalArgumentException("Wynik nie może być mniejszy niż 0");
+        }
+        this.scoreTeamA = scoreTeamA;
+    }
+
+    public Integer getScoreTeamB() {
+        return scoreTeamB;
+    }
+
+    public void setScoreTeamB(Integer scoreTeamB) {
+        if (scoreTeamB < 0) {
+            throw new IllegalArgumentException("Wynik nie może być mniejszy niż 0");
+        }
+        this.scoreTeamB = scoreTeamB;
     }
 
     public String getTeamA() {
@@ -64,6 +89,9 @@ public class Match {
     }
 
     public void setOddDraw(Double oddDraw) {
+        if (oddDraw < 1) {
+            throw new IllegalArgumentException("Kurs nie może być mniejszy niż 1");
+        }
         this.oddDraw = oddDraw;
     }
 
@@ -100,5 +128,15 @@ public class Match {
 
     public void setBettingClosed(boolean bettingClosed) {
         this.bettingClosed = bettingClosed;
+    }
+
+    public void setResultWhenScoreIsKnown() {
+        if (scoreTeamA > scoreTeamB) {
+            setResult(MatchResult.TEAM_A);
+        } else if (scoreTeamA < scoreTeamB) {
+            setResult(MatchResult.TEAM_B);
+        } else {
+            setResult(MatchResult.DRAW);
+        }
     }
 }

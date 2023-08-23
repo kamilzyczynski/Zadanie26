@@ -39,4 +39,5 @@ public class BookmakerService {
     public void save(Bet bet) {
         betRepository.save(bet);
     }
+
 }

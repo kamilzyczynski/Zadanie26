@@ -53,4 +53,32 @@ public class MatchController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/match/score/{id}")
+    public String showFormToAddScoreMatch(@PathVariable Long id, Model model) {
+        Optional<Match> matchById = bookmakerService.findMatchById(id);
+
+        if (matchById.isPresent()) {
+            Match match = matchById.get();
+            model.addAttribute("match", match);
+            return "scoreMatch";
+        }
+        return "error";
+    }
+
+    @PostMapping("/match/score")
+    public String addScoreMatch(@ModelAttribute Match match, @RequestParam Long matchId) {
+        Optional<Match> matchById = bookmakerService.findMatchById(matchId);
+
+        if (matchById.isPresent()) {
+            Match matchFromDb = matchById.get();
+            matchFromDb.setScoreTeamA(match.getScoreTeamA());
+            matchFromDb.setScoreTeamB(match.getScoreTeamB());
+            matchFromDb.setBettingClosed(true);
+            matchFromDb.setResultWhenScoreIsKnown();
+            bookmakerService.save(matchFromDb);
+        }
+
+        return "redirect:/";
+    }
 }
