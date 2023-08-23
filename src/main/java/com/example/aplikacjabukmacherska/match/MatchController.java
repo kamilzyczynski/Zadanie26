@@ -42,16 +42,19 @@ public class MatchController {
     }
 
     @PostMapping("/match/bet")
-    public String betMatch(Bet bet, @RequestParam Long matchId) {
+    public String betMatch(Bet bet, @RequestParam Long matchId, Model model) {
         Optional<Match> matchById = bookmakerService.findMatchById(matchId);
 
         if (matchById.isPresent()) {
             Match match = matchById.get();
             bet.setMatch(match);
+            bet.calculatePossibleWin();
             bookmakerService.save(bet);
+            model.addAttribute("bet", bet);
+            return "betSuccess";
         }
 
-        return "redirect:/";
+        return "error";
     }
 
     @GetMapping("/match/score/{id}")
@@ -72,8 +75,9 @@ public class MatchController {
 
         if (matchById.isPresent()) {
             Match matchFromDb = matchById.get();
-            matchFromDb.setScoreTeamA(match.getScoreTeamA());
-            matchFromDb.setScoreTeamB(match.getScoreTeamB());
+            MatchDetails matchDetails = matchFromDb.getMatchDetails();
+            matchDetails.setScoreTeamA(match.getMatchDetails().getScoreTeamA());
+            matchDetails.setScoreTeamB(match.getMatchDetails().getScoreTeamB());
             matchFromDb.setBettingClosed(true);
             matchFromDb.setResultWhenScoreIsKnown();
             bookmakerService.save(matchFromDb);

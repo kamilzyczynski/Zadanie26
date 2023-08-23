@@ -24,12 +24,12 @@
         <div>
             <label for="scoreTeamA" th:text="|Wprowadź wynik ${match.teamA}|"></label>
             <input class="form-control custom-select-width" id="scoreTeamA" type="number"
-                   aria-label="default input example" step="1" th:field="*{scoreTeamA}">
+                   aria-label="default input example" step="1" th:field="*{matchDetails.scoreTeamA}">
         </div>
         <div>
             <label for="scoreTeamB" th:text="|Wprowadź wynik ${match.teamB}|"></label>
             <input class="form-control custom-select-width" id="scoreTeamB" type="number"
-                   aria-label="default input example" step="1" th:field="*{scoreTeamB}">
+                   aria-label="default input example" step="1" th:field="*{matchDetails.scoreTeamB}">
         </div>
         </br>
         <div class="col-12">

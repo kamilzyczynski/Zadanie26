@@ -19,9 +19,9 @@
     </ul>
     </br>
     <p>Kursy:</p>
-    <p th:text="|${match.teamA}: ${match.oddTeamA}|"></p>
-    <p th:text="|Remis: ${match.oddDraw}|"></p>
-    <p th:text="|${match.teamB}: ${match.oddTeamB}|"></p>
+    <p th:text="|${match.teamA}: ${match.matchDetails.oddTeamA}|"></p>
+    <p th:text="|Remis: ${match.matchDetails.oddDraw}|"></p>
+    <p th:text="|${match.teamB}: ${match.matchDetails.oddTeamB}|"></p>
     </br>
     <form method="post" th:action="@{/match/bet}" th:object="${bet}">
         <input type="hidden" th:value="${match.getId()}" name="matchId">

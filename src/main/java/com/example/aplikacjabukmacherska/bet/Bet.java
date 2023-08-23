@@ -1,6 +1,6 @@
 package com.example.aplikacjabukmacherska.bet;
 
-import com.example.aplikacjabukmacherska.MatchResult;
+import com.example.aplikacjabukmacherska.match.MatchResult;
 import com.example.aplikacjabukmacherska.match.Match;
 
 import javax.persistence.*;
@@ -12,7 +12,9 @@ public class Bet {
     private Long id;
     @Enumerated(EnumType.STRING)
     private MatchResult matchbet;
-    private double stake;
+    private Double stake;
+
+    private Double possibleWin;
     @ManyToOne
     private Match match;
 
@@ -24,11 +26,14 @@ public class Bet {
         this.matchbet = matchbet;
     }
 
-    public double getStake() {
+    public Double getStake() {
         return stake;
     }
 
     public void setStake(double stake) {
+        if (stake < 0) {
+            throw new IllegalArgumentException("Stawka nie może być mniejsza niż 0.00 zł");
+        }
         this.stake = stake;
     }
 
@@ -38,5 +43,21 @@ public class Bet {
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public Double calculatePossibleWin() {
+        possibleWin = stake;
+        if (matchbet.equals(MatchResult.TEAM_A)) {
+            possibleWin *= match.getMatchDetails().getOddTeamA();
+        } else if (matchbet.equals(MatchResult.TEAM_B)) {
+            possibleWin *= match.getMatchDetails().getOddTeamB();
+        } else {
+            possibleWin *= match.getMatchDetails().getOddDraw();
+        }
+        return possibleWin;
+    }
+
+    public Double getPossibleWin() {
+        return possibleWin;
     }
 }

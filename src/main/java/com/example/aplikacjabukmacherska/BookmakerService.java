@@ -3,9 +3,10 @@ package com.example.aplikacjabukmacherska;
 import com.example.aplikacjabukmacherska.bet.Bet;
 import com.example.aplikacjabukmacherska.bet.BetRepository;
 import com.example.aplikacjabukmacherska.match.Match;
+import com.example.aplikacjabukmacherska.match.MatchDetails;
+import com.example.aplikacjabukmacherska.match.MatchDetailsRepository;
 import com.example.aplikacjabukmacherska.match.MatchRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class BookmakerService {
     private MatchRepository matchRepository;
     private BetRepository betRepository;
+    private MatchDetailsRepository matchDetailsRepository;
 
-    public BookmakerService(MatchRepository matchRepository, BetRepository betRepository) {
+    public BookmakerService(MatchRepository matchRepository, BetRepository betRepository, MatchDetailsRepository matchDetailsRepository) {
         this.matchRepository = matchRepository;
         this.betRepository = betRepository;
+        this.matchDetailsRepository = matchDetailsRepository;
     }
 
     public List<Match> showMatchesAvailableForBetting() {
@@ -29,6 +32,14 @@ public class BookmakerService {
     }
 
     public void addNewMatchForBetting(Match match) {
+        MatchDetails matchDetails = new MatchDetails();
+        matchDetails.setOddTeamA(match.getMatchDetails().getOddTeamA());
+        matchDetails.setOddTeamB(match.getMatchDetails().getOddTeamB());
+        matchDetails.setOddDraw(match.getMatchDetails().getOddDraw());
+
+        matchDetailsRepository.save(matchDetails);
+        match.setMatchDetails(matchDetails);
+
         matchRepository.save(match);
     }
 
