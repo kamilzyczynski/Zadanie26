@@ -8,21 +8,43 @@
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments :: header"></div>
+</header>
 <div class="container">
+    <h4>TOP 3 najczęściej obstawianych meczów:</h4>
+    <div class="list-container">
+        <ul th:each="topMatch : ${topMatches}" class="list-group list-group-horizontal">
+            <li class="list-group-item number-width" th:text="${topMatch.getId()}"></li>
+            <li class="list-group-item name-width" th:text="${topMatch.getTeamA()}"></li>
+            <li class="list-group-item number-width" >vs.</li>
+            <li class="list-group-item name-width" th:text="${topMatch.getTeamB()}"></li>
+            <a th:href="@{|/match/bet/${topMatch.getId()}|}">Obstaw wynik &nbsp;</a>
+            <a th:href="@{|/match/score/${topMatch.getId()}|}">Wprowadź wynik &nbsp;</a>
+            <a th:href="@{|/match/delete/${topMatch.getId()}|}">Usuń mecz</a>
+        </ul>
+    </div>
+    </br>
     <h4>Lista meczów dostępnych do obstawienia:</h4>
     </br>
     <div class="list-container">
     <ul th:each="match : ${matches}" class="list-group list-group-horizontal">
-        <li class="list-group-item" th:text="${match.getId()}"></li>
-        <li class="list-group-item" th:text="${match.getTeamA()}"></li>
-        <li class="list-group-item" >vs.</li>
-        <li class="list-group-item" th:text="${match.getTeamB()}"></li>
+        <li class="list-group-item number-width" th:text="${match.getId()}"></li>
+        <li class="list-group-item name-width" th:text="${match.getTeamA()}"></li>
+        <li class="list-group-item number-width" >vs.</li>
+        <li class="list-group-item name-width" th:text="${match.getTeamB()}"></li>
         <a th:href="@{|/match/bet/${match.getId()}|}">Obstaw wynik &nbsp;</a>
-        <a th:href="@{|/match/score/${match.getId()}|}">Wprowadź wynik</a>
+        <a th:href="@{|/match/score/${match.getId()}|}">Wprowadź wynik &nbsp;</a>
+        <a th:href="@{|/match/delete/${match.getId()}|}">Usuń mecz</a>
     </ul>
     </div>
     </br>
-    <a href="/match/add">Dodaj mecz do obstawienia</a>
+    <a href="/match/add">Dodaj mecz do obstawienia</a></br>
+    <a href="/bet/archive">Historia obstawionych meczów</a>
 </div>
+
+<footer>
+    <div th:replace="fragments :: footer"></div>
+</footer>
 </body>
 </html>

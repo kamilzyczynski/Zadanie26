@@ -1,9 +1,11 @@
 package com.example.aplikacjabukmacherska.match;
 
+import com.example.aplikacjabukmacherska.bet.Bet;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Match {
@@ -18,6 +20,9 @@ public class Match {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private boolean bettingClosed;
+
+    @OneToMany(mappedBy = "match", cascade = {CascadeType.REMOVE})
+    private List<Bet> bets;
 
     @OneToOne
     @JoinColumn(name = "match_details_id", unique = true)
@@ -80,7 +85,7 @@ public class Match {
     }
 
     public void setResultWhenScoreIsKnown() {
-        if (matchDetails.getScoreTeamA() > matchDetails.getScoreTeamA()) {
+        if (matchDetails.getScoreTeamA() > matchDetails.getScoreTeamB()) {
             setResult(MatchResult.TEAM_A);
         } else if (matchDetails.getScoreTeamA() < matchDetails.getScoreTeamB()) {
             setResult(MatchResult.TEAM_B);

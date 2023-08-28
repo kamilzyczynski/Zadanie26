@@ -8,8 +8,11 @@
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments :: header"></div>
+</header>
 <div class="container">
-    <h4>Wprowadź wynik meczu mecz</h4>
+    <h4>Wprowadź wynik meczu</h4>
     </br>
     <ul class="list-group list-group-horizontal-xl">
         <li class="list-group-item" th:text="${match.getTeamA()}"></li>
@@ -33,9 +36,15 @@
         </div>
         </br>
         <div class="col-12">
-            <button class="btn btn-primary" type="submit">Dodaj wynik meczu</button>
+            <button class="btn btn-secondary" type="submit">Dodaj wynik meczu</button>
         </div>
     </form>
+    </br>
+    <a th:href="@{/}">Powrót do strony głównej</a>
 </div>
+
+<footer>
+    <div th:replace="fragments :: footer"></div>
+</footer>
 </body>
 </html>

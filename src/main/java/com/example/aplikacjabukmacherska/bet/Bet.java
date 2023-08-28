@@ -7,6 +7,22 @@ import javax.persistence.*;
 
 @Entity
 public class Bet {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setStake(Double stake) {
+        this.stake = stake;
+    }
+
+    public void setPossibleWin(Double possibleWin) {
+        this.possibleWin = possibleWin;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

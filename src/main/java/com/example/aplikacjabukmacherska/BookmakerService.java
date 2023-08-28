@@ -51,4 +51,15 @@ public class BookmakerService {
         betRepository.save(bet);
     }
 
+    public void deleteMatch(Match match) {
+        matchRepository.delete(match);
+    }
+
+    public List<Bet> findAll() {
+        return betRepository.findAll();
+    }
+
+    public List<Match> findTop3ByBets() {
+        return matchRepository.findTop3ByOrderByBetsDesc();
+    }
 }

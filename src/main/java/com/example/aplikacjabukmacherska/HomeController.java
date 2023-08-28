@@ -14,6 +14,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
+        model.addAttribute("topMatches", bookmakerService.findTop3ByBets());
         model.addAttribute("matches", bookmakerService.showMatchesAvailableForBetting());
         return "home";
     }

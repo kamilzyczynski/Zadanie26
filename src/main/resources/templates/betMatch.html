@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments :: header"></div>
+</header>
 <div class="container">
     <h4>Obstaw mecz</h4>
     </br>
@@ -43,9 +46,14 @@
         </div>
         </br>
         <div class="col-12">
-            <button class="btn btn-primary" type="submit">Obstaw mecz</button>
+            <button class="btn btn-secondary" type="submit">Obstaw mecz</button>
         </div>
     </form>
+    </br>
+    <a th:href="@{/}">Powrót do strony głównej</a>
 </div>
+<footer>
+    <div th:replace="fragments :: footer"></div>
+</footer>
 </body>
 </html>

@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments :: header"></div>
+</header>
 <div class="container">
     <h4>Obstawiono mecz:</h4>
     </br>
@@ -19,9 +22,9 @@
     </ul>
     </br>
 
-    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.MatchResult).TEAM_A}" th:text="|Typ: ${bet.match.teamA}|"></p>
-    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.MatchResult).TEAM_B}" th:text="|Typ: ${bet.match.teamB}|"></p>
-    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.MatchResult).DRAW}" >Typ: Remis</p>
+    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_A}" th:text="|Typ: ${bet.match.teamA}|"></p>
+    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_B}" th:text="|Typ: ${bet.match.teamB}|"></p>
+    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).DRAW}" >Typ: Remis</p>
     </br>
     <p th:text="|Stawka: ${bet.stake} zł|"></p>
     <p th:text="|Potencjalna wygrana: ${bet.possibleWin} zł|"></p>
@@ -29,5 +32,8 @@
 
     <a th:href="@{/}">Powrót do strony głównej</a>
 </div>
+<footer>
+    <div th:replace="fragments :: footer"></div>
+</footer>
 </body>
 </html>

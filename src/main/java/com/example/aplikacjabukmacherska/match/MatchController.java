@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -38,7 +39,26 @@ public class MatchController {
             model.addAttribute("bet", new Bet());
             return "betMatch";
         }
-        return "error";
+        return "redirect:/";
+    }
+
+    @GetMapping("/match/delete/{id}")
+    public String deleteMatch(@PathVariable Long id) {
+        Optional<Match> matchById = bookmakerService.findMatchById(id);
+
+        if (matchById.isPresent()) {
+            Match match = matchById.get();
+            bookmakerService.deleteMatch(match);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/bet/archive")
+    public String showAllBets(Model model) {
+        List<Bet> bets = bookmakerService.findAll();
+        model.addAttribute("bets", bets);
+
+        return "betsArchive";
     }
 
     @PostMapping("/match/bet")
@@ -54,7 +74,7 @@ public class MatchController {
             return "betSuccess";
         }
 
-        return "error";
+        return "redirect:/";
     }
 
     @GetMapping("/match/score/{id}")
@@ -66,7 +86,7 @@ public class MatchController {
             model.addAttribute("match", match);
             return "scoreMatch";
         }
-        return "error";
+        return "redirect:/";
     }
 
     @PostMapping("/match/score")
