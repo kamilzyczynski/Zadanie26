@@ -29,24 +29,14 @@ public class BetController {
     }
 
     @PostMapping("/match/bet")
-    public String betMatch(Bet bet, @RequestParam Long matchId, Model model) {
-        Optional<Match> matchById = bookmakerService.findMatchById(matchId);
+    public String betMatch(Bet bet, @RequestParam Long matchId) {
+        Long betId = bookmakerService.makeBet(bet, matchId);
 
-        if (matchById.isPresent()) {
-            Match match = matchById.get();
-            bet.setMatch(match);
-            bet.calculatePossibleWin();
-            try {
-                bookmakerService.save(bet);
-            } catch (IllegalArgumentException ex) {
-                model.addAttribute("errorMessage", ex.getMessage());
-                return "error";
-            }
-            model.addAttribute("bet", bet);
-            return "betSuccess";
+        if (betId != null) {
+            return "redirect:/bet/%s/details".formatted(betId);
+        } else {
+            return "error";
         }
-
-        return "redirect:/";
     }
 
     @GetMapping("/match/{id}/bet")

@@ -22,11 +22,11 @@
     </ul>
     </br>
 
-    <form method="post" th:action="@{/match/score}" th:object="${match}">
+    <form method="post" th:action="@{/match/score}">
         <input type="hidden" th:value="${match.getId()}" name="matchId">
         <div>
             <label for="winner">Wybierz zwycięzcę:</label>
-            <select class="form-select custom-select-width" id="winner" th:field="*{result}">
+            <select class="form-select custom-select-width" id="winner" name="result">
                 <option value="TEAM_A"
                         th:text="${match.teamA}"></option>
                 <option value="DRAW">Remis</option>

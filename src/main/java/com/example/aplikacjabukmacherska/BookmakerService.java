@@ -2,10 +2,7 @@ package com.example.aplikacjabukmacherska;
 
 import com.example.aplikacjabukmacherska.bet.Bet;
 import com.example.aplikacjabukmacherska.bet.BetRepository;
-import com.example.aplikacjabukmacherska.match.Match;
-import com.example.aplikacjabukmacherska.match.MatchDetails;
-import com.example.aplikacjabukmacherska.match.MatchDetailsRepository;
-import com.example.aplikacjabukmacherska.match.MatchRepository;
+import com.example.aplikacjabukmacherska.match.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +62,30 @@ public class BookmakerService {
 
     public Optional<Bet> findBetById(Long id) {
         return betRepository.findById(id);
+    }
+
+    public Long makeBet(Bet bet, Long matchId) {
+        Optional<Match> matchById = findMatchById(matchId);
+
+        if (matchById.isPresent()) {
+            Match match = matchById.get();
+            bet.setMatch(match);
+            bet.calculatePossibleWin();
+            save(bet);
+            return bet.getId();
+        }
+        return null;
+    }
+
+    public void addMatchScore(String result, Long matchId) {
+        Optional<Match> matchById = findMatchById(matchId);
+
+        if (matchById.isPresent()) {
+            Match matchFromDb = matchById.get();
+            MatchResult matchResult = MatchResult.valueOf(result);
+            matchFromDb.setResult(matchResult);
+            matchFromDb.setBettingClosed(true);
+            save(matchFromDb);
+        }
     }
 }

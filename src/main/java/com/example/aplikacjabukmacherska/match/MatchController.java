@@ -57,23 +57,15 @@ public class MatchController {
         Optional<Match> matchById = bookmakerService.findMatchById(id);
 
         if (matchById.isPresent()) {
-            Match match = matchById.get();
-            model.addAttribute("match", match);
+            model.addAttribute("match", matchById.get());
             return "scoreMatch";
         }
         return "redirect:/";
     }
 
     @PostMapping("/match/score")
-    public String addScoreMatch(@ModelAttribute Match match, @RequestParam Long matchId, Model model) {
-        Optional<Match> matchById = bookmakerService.findMatchById(matchId);
-
-        if (matchById.isPresent()) {
-            Match matchFromDb = matchById.get();
-            matchFromDb.setResult(match.getResult());
-            matchFromDb.setBettingClosed(true);
-            bookmakerService.save(matchFromDb);
-        }
+    public String addScoreMatch(@RequestParam String result, @RequestParam Long matchId) {
+        bookmakerService.addMatchScore(result, matchId);
 
         return "redirect:/";
     }
