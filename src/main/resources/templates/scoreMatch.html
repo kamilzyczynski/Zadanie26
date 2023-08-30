@@ -25,18 +25,18 @@
     <form method="post" th:action="@{/match/score}" th:object="${match}">
         <input type="hidden" th:value="${match.getId()}" name="matchId">
         <div>
-            <label for="scoreTeamA" th:text="|Wprowadź wynik ${match.teamA}|"></label>
-            <input class="form-control custom-select-width" id="scoreTeamA" type="number"
-                   aria-label="default input example" step="1" th:field="*{matchDetails.scoreTeamA}">
-        </div>
-        <div>
-            <label for="scoreTeamB" th:text="|Wprowadź wynik ${match.teamB}|"></label>
-            <input class="form-control custom-select-width" id="scoreTeamB" type="number"
-                   aria-label="default input example" step="1" th:field="*{matchDetails.scoreTeamB}">
+            <label for="winner">Wybierz zwycięzcę:</label>
+            <select class="form-select custom-select-width" id="winner" th:field="*{result}">
+                <option value="TEAM_A"
+                        th:text="${match.teamA}"></option>
+                <option value="DRAW">Remis</option>
+                <option value="TEAM_B"
+                        th:text="${match.teamB}"></option>
+            </select>
         </div>
         </br>
         <div class="col-12">
-            <button class="btn btn-secondary" type="submit">Dodaj wynik meczu</button>
+            <button class="btn btn-secondary" type="submit">Dodaj rezultat meczu</button>
         </div>
     </form>
     </br>

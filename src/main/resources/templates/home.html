@@ -19,9 +19,11 @@
             <li class="list-group-item name-width" th:text="${topMatch.getTeamA()}"></li>
             <li class="list-group-item number-width" >vs.</li>
             <li class="list-group-item name-width" th:text="${topMatch.getTeamB()}"></li>
-            <a th:href="@{|/match/bet/${topMatch.getId()}|}">Obstaw wynik &nbsp;</a>
-            <a th:href="@{|/match/score/${topMatch.getId()}|}">Wprowadź wynik &nbsp;</a>
-            <a th:href="@{|/match/delete/${topMatch.getId()}|}">Usuń mecz</a>
+            <div class="buttons">
+            <a th:href="@{|/match/${topMatch.getId()}/bet|}" class="btn btn-secondary">Obstaw wynik</a>
+            <a th:href="@{|/match/${topMatch.getId()}/score|}" class="btn btn-secondary">Wprowadź wynik</a>
+            <a th:href="@{|/match/${topMatch.getId()}/delete|}" class="btn btn-secondary">Usuń mecz</a>
+            </div>
         </ul>
     </div>
     </br>
@@ -33,14 +35,16 @@
         <li class="list-group-item name-width" th:text="${match.getTeamA()}"></li>
         <li class="list-group-item number-width" >vs.</li>
         <li class="list-group-item name-width" th:text="${match.getTeamB()}"></li>
-        <a th:href="@{|/match/bet/${match.getId()}|}">Obstaw wynik &nbsp;</a>
-        <a th:href="@{|/match/score/${match.getId()}|}">Wprowadź wynik &nbsp;</a>
-        <a th:href="@{|/match/delete/${match.getId()}|}">Usuń mecz</a>
+        <div class="buttons">
+        <a th:href="@{|/match/${match.getId()}/bet|}" class="btn btn-secondary">Obstaw wynik</a>
+        <a th:href="@{|/match/${match.getId()}/score|}" class="btn btn-secondary">Wprowadź wynik</a>
+        <a th:href="@{|/match/${match.getId()}/delete|}" class="btn btn-secondary">Usuń mecz</a>
+        </div>
     </ul>
     </div>
     </br>
     <a href="/match/add">Dodaj mecz do obstawienia</a></br>
-    <a href="/bet/archive">Historia obstawionych meczów</a>
+    <a href="/bet/archive">Historia obstawionych meczów</a></br>
 </div>
 
 <footer>

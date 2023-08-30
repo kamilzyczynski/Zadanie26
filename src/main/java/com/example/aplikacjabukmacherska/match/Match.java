@@ -1,11 +1,8 @@
 package com.example.aplikacjabukmacherska.match;
 
-import com.example.aplikacjabukmacherska.bet.Bet;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Match {
@@ -14,16 +11,11 @@ public class Match {
     private Long id;
     private String teamA;
     private String teamB;
-    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private MatchResult result;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private boolean bettingClosed;
-
-    @OneToMany(mappedBy = "match", cascade = {CascadeType.REMOVE})
-    private List<Bet> bets;
-
     @OneToOne
     @JoinColumn(name = "match_details_id", unique = true)
     private MatchDetails matchDetails;
@@ -84,13 +76,4 @@ public class Match {
         this.bettingClosed = bettingClosed;
     }
 
-    public void setResultWhenScoreIsKnown() {
-        if (matchDetails.getScoreTeamA() > matchDetails.getScoreTeamB()) {
-            setResult(MatchResult.TEAM_A);
-        } else if (matchDetails.getScoreTeamA() < matchDetails.getScoreTeamB()) {
-            setResult(MatchResult.TEAM_B);
-        } else {
-            setResult(MatchResult.DRAW);
-        }
-    }
 }

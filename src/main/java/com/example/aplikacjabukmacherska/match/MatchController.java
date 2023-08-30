@@ -29,55 +29,30 @@ public class MatchController {
         return "redirect:/";
     }
 
-    @GetMapping("/match/bet/{id}")
-    public String showFormToBetMatch(@PathVariable Long id, Model model) {
+    @GetMapping("/match/{id}/delete")
+    public String deleteMatch(@PathVariable Long id, Model model) {
         Optional<Match> matchById = bookmakerService.findMatchById(id);
 
         if (matchById.isPresent()) {
-            Match match = matchById.get();
-            model.addAttribute("match", match);
-            model.addAttribute("bet", new Bet());
-            return "betMatch";
+            model.addAttribute("match", matchById.get());
+            return "confirmDelete";
         }
-        return "redirect:/";
+        return "error";
     }
 
-    @GetMapping("/match/delete/{id}")
-    public String deleteMatch(@PathVariable Long id) {
+    @GetMapping("/match/{id}/delete/confirm")
+    public String confirmDeletingMatch(@PathVariable Long id) {
         Optional<Match> matchById = bookmakerService.findMatchById(id);
 
         if (matchById.isPresent()) {
             Match match = matchById.get();
             bookmakerService.deleteMatch(match);
+            return "redirect:/";
         }
-        return "redirect:/";
+        return "error";
     }
 
-    @GetMapping("/bet/archive")
-    public String showAllBets(Model model) {
-        List<Bet> bets = bookmakerService.findAll();
-        model.addAttribute("bets", bets);
-
-        return "betsArchive";
-    }
-
-    @PostMapping("/match/bet")
-    public String betMatch(Bet bet, @RequestParam Long matchId, Model model) {
-        Optional<Match> matchById = bookmakerService.findMatchById(matchId);
-
-        if (matchById.isPresent()) {
-            Match match = matchById.get();
-            bet.setMatch(match);
-            bet.calculatePossibleWin();
-            bookmakerService.save(bet);
-            model.addAttribute("bet", bet);
-            return "betSuccess";
-        }
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/match/score/{id}")
+    @GetMapping("/match/{id}/score")
     public String showFormToAddScoreMatch(@PathVariable Long id, Model model) {
         Optional<Match> matchById = bookmakerService.findMatchById(id);
 
@@ -90,16 +65,13 @@ public class MatchController {
     }
 
     @PostMapping("/match/score")
-    public String addScoreMatch(@ModelAttribute Match match, @RequestParam Long matchId) {
+    public String addScoreMatch(@ModelAttribute Match match, @RequestParam Long matchId, Model model) {
         Optional<Match> matchById = bookmakerService.findMatchById(matchId);
 
         if (matchById.isPresent()) {
             Match matchFromDb = matchById.get();
-            MatchDetails matchDetails = matchFromDb.getMatchDetails();
-            matchDetails.setScoreTeamA(match.getMatchDetails().getScoreTeamA());
-            matchDetails.setScoreTeamB(match.getMatchDetails().getScoreTeamB());
+            matchFromDb.setResult(match.getResult());
             matchFromDb.setBettingClosed(true);
-            matchFromDb.setResultWhenScoreIsKnown();
             bookmakerService.save(matchFromDb);
         }
 

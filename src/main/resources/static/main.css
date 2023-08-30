@@ -33,7 +33,7 @@
 }
 
 .correct {
-    color: greenyellow !important;
+    color: #237921 !important;
     font-weight: bold;
 }
 
@@ -69,4 +69,10 @@ body {
     width: 50px;
     box-sizing: border-box;
     text-align: center;
+}
+
+.buttons {
+    display: flex;
+    padding: 5px;
+    gap: 10px;
 }

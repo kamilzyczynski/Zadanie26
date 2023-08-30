@@ -62,4 +62,8 @@ public class BookmakerService {
     public List<Match> findTop3ByBets() {
         return matchRepository.findTop3ByOrderByBetsDesc();
     }
+
+    public Optional<Bet> findBetById(Long id) {
+        return betRepository.findById(id);
+    }
 }

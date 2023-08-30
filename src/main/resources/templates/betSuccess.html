@@ -25,11 +25,14 @@
     <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_A}" th:text="|Typ: ${bet.match.teamA}|"></p>
     <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_B}" th:text="|Typ: ${bet.match.teamB}|"></p>
     <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).DRAW}" >Typ: Remis</p>
-    </br>
+    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_A}" th:text="|Kurs: ${bet.match.matchDetails.oddTeamA}|">
+    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_B}" th:text="|Kurs: ${bet.match.matchDetails.oddTeamB}|">
+    <p th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).DRAW}" th:text="|Kurs: ${bet.match.matchDetails.oddDraw}|">
     <p th:text="|Stawka: ${bet.stake} zł|"></p>
-    <p th:text="|Potencjalna wygrana: ${bet.possibleWin} zł|"></p>
+    <p th:text="|Potencjalna wygrana: ${#numbers.formatDecimal(bet.possibleWin, 1, 'POINT', 2, 'POINT')} zł|"></p>
     </br>
 
+    <a th:href="@{|/bet/${bet.id}/details|}">Szczegóły kuponu</a>
     <a th:href="@{/}">Powrót do strony głównej</a>
 </div>
 <footer>

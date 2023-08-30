@@ -22,9 +22,10 @@
             <th scope="col">Gospodarze</th>
             <th scope="col">Goście</th>
             <th scope="col">Typ</th>
-            <th scope="col">Stawka</th>
-            <th scope="col">Możliwa wygrana</th>
-            <th scope="col">Rezultat meczu</th>
+            <th scope="col">Szczegóły</th>
+<!--            <th scope="col">Stawka</th>-->
+<!--            <th scope="col">Możliwa wygrana</th>-->
+<!--            <th scope="col">Rezultat meczu</th>-->
         </tr>
         </thead>
         <tbody>
@@ -37,21 +38,14 @@
             <td th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_B}"
                 th:text="${bet.match.teamB}"></td>
             <td th:if="${bet.matchbet == T(com.example.aplikacjabukmacherska.match.MatchResult).DRAW}">Remis</td>
-            <td th:text="${bet.stake}"></td>
-            <td th:class="${bet.match.getResult() == null ? 'unknown' : (bet.matchbet == bet.match.getResult() ? 'correct' : 'wrong')}">
-                <span th:text="${bet.possibleWin}"></span>
+            <td>
+            <a class="btn btn-secondary" th:href="@{|/bet/${bet.id}/details|}">Sprawdź kupon</a>
             </td>
-            <td th:if="${bet.match.getResult() == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_A}" th:text="${bet.match.teamA}"></td>
-            <td th:if="${bet.match.getResult() == T(com.example.aplikacjabukmacherska.match.MatchResult).TEAM_B}" th:text="${bet.match.teamB}"></td>
-            <td th:if="${bet.match.getResult() == T(com.example.aplikacjabukmacherska.match.MatchResult).DRAW}" >Remis</td>
-<!--            <td th:text="${bet.match.getResult()}"></td>-->
         </tr>
         </tbody>
     </table>
-
-</div>
-</br>
-<a th:href="@{/}">Powrót do strony głównej</a>
+    </br>
+    <a th:href="@{/}">Powrót do strony głównej</a>
 </div>
 <footer>
     <div th:replace="fragments :: footer"></div>

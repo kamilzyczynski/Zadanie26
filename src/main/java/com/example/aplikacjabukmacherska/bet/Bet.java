@@ -2,27 +2,13 @@ package com.example.aplikacjabukmacherska.bet;
 
 import com.example.aplikacjabukmacherska.match.MatchResult;
 import com.example.aplikacjabukmacherska.match.Match;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 public class Bet {
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setStake(Double stake) {
-        this.stake = stake;
-    }
-
-    public void setPossibleWin(Double possibleWin) {
-        this.possibleWin = possibleWin;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,8 +17,20 @@ public class Bet {
     private Double stake;
 
     private Double possibleWin;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.REMOVE)
     private Match match;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPossibleWin(Double possibleWin) {
+        this.possibleWin = possibleWin;
+    }
 
     public MatchResult getMatchbet() {
         return matchbet;
@@ -70,7 +68,11 @@ public class Bet {
         } else {
             possibleWin *= match.getMatchDetails().getOddDraw();
         }
-        return possibleWin;
+
+        BigDecimal possibleWinBigDecimal = new BigDecimal(possibleWin);
+        possibleWinBigDecimal = possibleWinBigDecimal.setScale(2, RoundingMode.HALF_UP);
+
+        return possibleWinBigDecimal.doubleValue();
     }
 
     public Double getPossibleWin() {
